@@ -14,7 +14,13 @@ function App() {
     const task = {
       id: todos.length === 0 ? 1 : todos[todos.length - 1].id + 1,
       taskName: newTask,
+      completed: false,
     };
+
+    if (newTask === "") {
+      return alert("Please enter a task...");
+    }
+
     const newTodoList = [...todos, task];
     setTodos(newTodoList);
   };
@@ -22,6 +28,17 @@ function App() {
   const deleteTask = (id) => {
     const filteredTodos = todos.filter((task) => task.id !== id);
     setTodos(filteredTodos);
+  };
+
+  const handleCompleted = (id) => {
+    const newTodos = todos.map((task) => {
+      if (task.id === id) {
+        return { ...task, completed: true };
+      } else {
+        return task;
+      }
+    });
+    setTodos(newTodos);
   };
 
   return (
@@ -32,7 +49,14 @@ function App() {
       </div>
       <div className="list">
         {todos.map((el) => {
-          return <Task el={el} id={el.id} deleteTask={deleteTask} />;
+          return (
+            <Task
+              el={el}
+              key={el.id}
+              deleteTask={deleteTask}
+              handleCompleted={handleCompleted}
+            />
+          );
         })}
       </div>
     </div>
