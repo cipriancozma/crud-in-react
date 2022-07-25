@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import Task from "./Task";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -30,20 +31,8 @@ function App() {
         <button onClick={addTask}>Add Task</button>
       </div>
       <div className="list">
-        {todos.map((el, idx) => {
-          return (
-            <div
-              key={idx}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <h2>{el.taskName}</h2>
-              <button onClick={() => deleteTask(el.id)}>X</button>
-            </div>
-          );
+        {todos.map((el) => {
+          return <Task el={el} id={el.id} deleteTask={deleteTask} />;
         })}
       </div>
     </div>
